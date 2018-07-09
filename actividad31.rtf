@@ -1,0 +1,321 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf100
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;\f1\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red255\green255\blue255;\red0\green0\blue0;
+}
+{\*\expandedcolortbl;;\csgray\c0;\csgray\c100000;\cssrgb\c0\c0\c0;
+}
+\margl1440\margr1440\vieww23700\viewh14260\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \cb3 \CocoaLigature0 Last login: Wed Jul  4 19:01:44 on ttys002\
+MacBook-Air-de-Bastian:~ bastianortega$ cd /Users/bastianortega/PostgreSQL/pg10;source pg10.env;bin/psql;exit\
+psql (10.4)\
+Type "help" for help.\
+\
+\pard\pardeftab720\sl440\partightenfactor0
+
+\f1\fs28 \cf4 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec4 1. Crear una base de datos llamada call_list
+\f0\fs22 \cf2 \cb3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\
+postgres=# CREATE DATABASE call_list\
+postgres-# ;\
+CREATE DATABASE\
+postgres=# \\l\
+                             List of databases\
+   Name    |  Owner   | Encoding | Collate | Ctype |   Access privileges   \
+-----------+----------+----------+---------+-------+-----------------------\
+ call_list | postgres | UTF8     | C       | C     | \
+ postgres  | postgres | UTF8     | C       | C     | \
+ template0 | postgres | UTF8     | C       | C     | =c/postgres          +\
+           |          |          |         |       | postgres=CTc/postgres\
+ template1 | postgres | UTF8     | C       | C     | =c/postgres          +\
+           |          |          |         |       | postgres=CTc/postgres\
+(4 rows)\
+\
+postgres=# \\c call_list\
+\
+\pard\pardeftab720\sl440\partightenfactor0
+
+\f1\fs28 \cf4 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 2. \cf4 \outl0\strokewidth0 \strokec4 En la base de datos recien creada, crear la tabla users con los campos id (clave primaria), first_name, email.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \cb3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 \
+\
+call_list=# CREATE TABLE users(                                                 \
+id serial primary key,                                                          \
+first_name varchar(50),                                                         \
+email varchar(30)                                                               \
+);\
+\
+\
+LINE 1: select * users\
+                 ^\
+call_list=# select * from users;\
+ id | first_name | email \
+----+------------+-------\
+(0 rows)\
+\
+\
+\pard\pardeftab720\sl440\partightenfactor0
+
+\f1\fs28 \cf4 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec4 3. Ingresar un usuario, llamado Carlos (el resto de los datos deben inventarlos).
+\fs37\fsmilli18667 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \cb3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 \
+                                            ^\
+call_list=# insert into users(first_name, email) values ('carlos','carlos@gmail.com');\
+INSERT 0 1\
+\
+call_list=# select * from users;                                                             \
+ id | first_name |      email       \
+----+------------+------------------\
+  1 | carlos     | carlos@gmail.com\
+(1 row)\
+\
+\pard\pardeftab720\sl440\partightenfactor0
+
+\f1\fs37\fsmilli18667 \cf4 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec4 . \
+
+\fs28 4. Ingresar un usuario, llamada Laura (el resto de los datos deben inventarlos).
+\fs37\fsmilli18667 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \cb3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 \
+call_list=# insert into users(first_name, email) values ('laura','laura@gmail.com');\
+INSERT 0 1\
+call_list=# select * from users;\
+ id | first_name |      email       \
+----+------------+------------------\
+  1 | carlos     | carlos@gmail.com\
+  2 | laura      | laura@gmail.com\
+(2 rows)\
+\
+\pard\pardeftab720\sl440\partightenfactor0
+
+\f1\fs28 \cf4 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec4 5. Crear una tabla llamada calls con los campos id (clave primaria), phone, date, user_id (foreign key relacionado a users).\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \cb3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 \
+\
+call_list=# CREATE TABLE calls(                                                             \
+id serial primary key,                                                                      \
+phone integer,                                                                              \
+date date,\
+call_list(# user_id serial references users (id)\
+call_list(# );\
+CREATE TABLE\
+call_list=# \\d calls\
+                               Table "public.calls"\
+ Column  |  Type   | Collation | Nullable |                Default                 \
+---------+---------+-----------+----------+----------------------------------------\
+ id      | integer |           | not null | nextval('calls_id_seq'::regclass)\
+ phone   | integer |           |          | \
+ date    | date    |           |          | \
+ user_id | integer |           | not null | nextval('calls_user_id_seq'::regclass)\
+Indexes:\
+    "calls_pkey" PRIMARY KEY, btree (id)\
+Foreign-key constraints:\
+    "calls_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id)\
+\
+call_list=# select * from calls\
+call_list-# ;\
+ id | phone | date | user_id \
+----+-------+------+---------\
+(0 rows)\
+\
+\pard\pardeftab720\sl440\partightenfactor0
+
+\f1\fs28 \cf4 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec4 6. Agregar a la tabla users el campo last_name.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \cb3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 \
+call_list=# alter table users add column last_name varchar(20);\
+ALTER TABLE\
+LINE 1: select * users\
+                 ^\
+call_list=# select * from users                                                             ;\
+ id | first_name |      email       | last_name \
+----+------------+------------------+-----------\
+  1 | carlos     | carlos@gmail.com | \
+  2 | laura      | laura@gmail.com  | \
+(2 rows)\
+\
+\pard\pardeftab720\sl440\partightenfactor0
+
+\f1\fs28 \cf4 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec4 7. Ingresar el apellido del usuario Carlos.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \cb3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 \
+\
+call_list=# update users set last_name = 'perez' where first_name = 'carlos';\
+UPDATE 1\
+call_list=# select * from users                                                             ;\
+ id | first_name |      email       | last_name \
+----+------------+------------------+-----------\
+  2 | laura      | laura@gmail.com  | \
+  1 | carlos     | carlos@gmail.com | P\'e9rez\
+(2 rows)\
+\
+\pard\pardeftab720\sl440\partightenfactor0
+
+\f1\fs28 \cf4 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec4 8. Ingresar el apellido del usuario Laura.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \cb3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 \
+call_list=# update users set last_name = 'gonzalez' where first_name = 'laura';\
+UPDATE 1\
+call_list=# select * from users                                                             ;\
+ id | first_name |      email       | last_name \
+----+------------+------------------+-----------\
+  1 | carlos     | carlos@gmail.com | perez\
+  2 | laura      | laura@gmail.com  | gonzalez\
+(2 rows)\
+\
+call_list=# select * from calls;\
+ id | phone | date | user_id \
+----+-------+------+---------\
+(0 rows)\
+\
+\pard\pardeftab720\sl440\partightenfactor0
+
+\f1\fs28 \cf4 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec4 10. Ingresar 4 llamadas asociadas al usuario Carlos.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \cb3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 \
+\
+                                        ^\
+call_list=# insert into calls ( phone, date) values (99999999 ,current_timestamp);\
+INSERT 0 1\
+call_list=# select * from calls;\
+ id |  phone   |    date    | user_id \
+----+----------+------------+---------\
+  1 | 99999999 | 2018-07-04 |       1\
+(1 row)\
+\
+call_list=# insert into calls ( phone, date,user_id) values (99999991 ,current_timestamp,1); \
+INSERT 0 1\
+call_list=# insert into calls ( phone, date,user_id) values (99999921 ,current_timestamp,1); \
+INSERT 0 1\
+call_list=# insert into calls ( phone, date,user_id) values (99999931 ,current_timestamp,1); \
+INSERT 0 1\
+call_list=# select * from calls;                                                             id |  phone   |    date    | user_id \
+----+----------+------------+---------\
+  1 | 99999999 | 2018-07-04 |       1\
+  2 | 99999991 | 2018-07-04 |       1\
+  3 | 99999921 | 2018-07-04 |       1\
+  4 | 99999931 | 2018-07-04 |       1\
+(4 rows)\
+\
+\pard\pardeftab720\sl440\partightenfactor0
+
+\f1\fs28 \cf4 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec4 9. Ingresar 6 llamadas asociadas al usuario Laura.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \cb3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 \
+call_list=# insert into calls ( phone, date,user_id) values (99999991 ,current_timestamp,2); \
+INSERT 0 1\
+call_list=# insert into calls ( phone, date,user_id) values (99999921 ,current_timestamp,2); \
+INSERT 0 1\
+call_list=# insert into calls ( phone, date,user_id) values (99999931 ,current_timestamp,2); \
+INSERT 0 1\
+call_list=# insert into calls ( phone, date,user_id) values (99999941 ,current_timestamp,2); \
+INSERT 0 1\
+call_list=# insert into calls ( phone, date,user_id) values (99999951 ,current_timestamp,2); \
+INSERT 0 1\
+\
+call_list=# insert into calls ( phone, date,user_id) values (99999961 ,current_timestamp,2); \
+INSERT 0 1\
+call_list=# select * from calls;                                                             \
+ id |  phone   |    date    | user_id \
+----+----------+------------+---------\
+  1 | 99999999 | 2018-07-04 |       1\
+  2 | 99999991 | 2018-07-04 |       1\
+  3 | 99999921 | 2018-07-04 |       1\
+  4 | 99999931 | 2018-07-04 |       1\
+  5 | 99999991 | 2018-07-04 |       2\
+  6 | 99999921 | 2018-07-04 |       2\
+  7 | 99999931 | 2018-07-04 |       2\
+  8 | 99999941 | 2018-07-04 |       2\
+  9 | 99999951 | 2018-07-04 |       2\
+ 10 | 99999961 | 2018-07-04 |       2\
+(10 rows)\
+\
+\pard\pardeftab720\sl440\partightenfactor0
+
+\f1\fs28 \cf4 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec4 11. Crear un nuevo usuario.\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \cb3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0                                                              ^\
+call_list=# insert into users ( first_name, email,last_name) values ('juan' ,'juan@gmail.com','mu\'f1oz');\
+INSERT 0 1\
+call_list=# select * from users                                                                                                                  ;\
+ id | first_name |      email       | last_name \
+----+------------+------------------+-----------\
+  1 | carlos     | carlos@gmail.com | perez\
+  2 | laura      | laura@gmail.com  | gonzalez\
+  3 | juan       | juan@gmail.com   | mu\'f1oz\
+(3 rows)\
+\
+\
+\pard\pardeftab720\sl440\partightenfactor0
+
+\f1\fs28 \cf4 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec4 12. Seleccionar la cantidad de llamados de cada uno de los usuarios (nombre de usuario y cantidad de llamadas).\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \cb3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0                                       ^\
+call_list=# select count(*), first_name from users, calls where user_id =  users.id group by users.first_name;\
+ count | first_name \
+-------+------------\
+     6 | laura\
+     4 | carlos\
+(2 rows)\
+\
+\pard\pardeftab720\sl440\partightenfactor0
+
+\f1\fs28 \cf4 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec4 13. Seleccionar los llamados del usuario llamado Carlos ordenados por fecha en orden descendente.
+\f0\fs22 \cf2 \cb3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+\
+call_list=# select date,phone, first_name from users, calls where user_id =  users.id and user_id = 1 order by date desc ;\
+    date    |  phone   | first_name \
+------------+----------+------------\
+ 2018-07-04 | 99999999 | carlos\
+ 2018-07-04 | 99999991 | carlos\
+ 2018-07-04 | 99999921 | carlos\
+ 2018-07-04 | 99999931 | carlos\
+(4 rows)\
+\
+\pard\pardeftab720\sl440\partightenfactor0
+
+\f1\fs28 \cf4 \cb1 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \outl0\strokewidth0 \strokec4 "Necesito agregar a la base una tabla de auditor\'eda que registre el\
+motivo del borrado de una llamada y el usuario que lo efectu\'f3."
+\fs37\fsmilli18667 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs22 \cf2 \cb3 \kerning1\expnd0\expndtw0 \CocoaLigature0 \outl0\strokewidth0 \
+\
+    \
+call_list=# create table motivo(                                                         \
+user_id serial references users(id),                                                     \
+usuario varchar(30),                                                                     \
+motivo varchar(50),                                                                      \
+phone integer);\
+CREATE TABLE\
+call_list=# \
+}
